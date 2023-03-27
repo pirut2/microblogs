@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+{% load thumbnail %}
+{%load static%}
+{% block title %}{{ group }}{% endblock %}
+{% block content %}
+  <h2> {{title}} </h2> 
+  <br>
+  <p>{{group.description}}</p>
+  <br>
+  {% for post in page_obj %}
+  {% include 'includes/cycle.html' %}
+  {% endfor %} 
+  {% include 'posts/includes/paginator.html' %}
+{% endblock %}
