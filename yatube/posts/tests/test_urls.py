@@ -30,6 +30,7 @@ class TaskURLTests(TestCase):
             f'/posts/{cls.post.pk}/': 'all',
             f'/posts/{cls.post.pk}/edit/': 'author',
             '/create/': 'authorized',
+            '/follow/': 'authorized',
         }
         cls.template_dict = {
             '/': 'posts/index.html',
@@ -38,6 +39,7 @@ class TaskURLTests(TestCase):
             f'/posts/{cls.post.pk}/': 'posts/post_detail.html',
             f'/posts/{cls.post.pk}/edit/': 'posts/create_post.html',
             '/create/': 'posts/create_post.html',
+            '/follow/': 'posts/follow.html',
         }
 
     def setUp(self):
@@ -85,3 +87,8 @@ class TaskURLTests(TestCase):
         response_author = self.authorized_client_author.get(
             '/unexisting_page/')
         self.assertTemplateUsed(response_author, 'core/404.html')
+
+    def test_url_comment_redirect(self):
+        response_author = self.authorized_client_author.get(
+            f'/posts/{self.post.pk}/comment/')
+        self.assertEqual(response_author.status_code, HTTPStatus.FOUND)

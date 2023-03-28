@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from .consts import SELF_TEXT_STR
 
 User = get_user_model()
 
@@ -44,10 +45,10 @@ class Post(models.Model):
     )
 
     def __str__(self):
-        return self.text[:15]
+        return self.text[:SELF_TEXT_STR]
 
     class Meta:
-        ordering = ['-pub_date']
+        ordering = ('-pub_date', )
         verbose_name = 'Запись'
         verbose_name_plural = 'Записи'
 
